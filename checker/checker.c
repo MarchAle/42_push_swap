@@ -6,7 +6,7 @@
 /*   By: amarchal <amarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 15:04:46 by amarchal          #+#    #+#             */
-/*   Updated: 2022/01/17 17:19:16 by amarchal         ###   ########.fr       */
+/*   Updated: 2022/01/18 10:39:23 by amarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,18 @@ int	ft_checker(char **av, int fd)
 	stack_b = NULL;
 	stack_a = ft_fill_stack_a(stack_a, av);
 	if (!ft_execute(&stack_a, &stack_b, fd))
+	{
+		ft_lstclear(&stack_a);
+		ft_lstclear(&stack_b);
 		return (0);
+	}
 	if (!ft_checksort(stack_a) || ft_lstsize(stack_b))
 		write(1, "KO\n", 3);
 	else
 		write(1, "OK\n", 3);
+	if (stack_b)
+		ft_lstclear(&stack_b);
+	ft_lstclear(&stack_a);
 	return (1);
 }
 
